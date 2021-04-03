@@ -111,54 +111,6 @@ class Tuple():
         self.w = self.w/magnitude
         return self
 
-    def transformation(self, x, y, z):
-        identity = [[1, 0, 0, x], [0, 1, 0, y], [0, 0, 1, z], [0, 0, 0, 1]]
-        self.matrix = self.matrix * matrix(identity)
-
-    def scaling(self, x, y, z):
-        identity = [[x, 0, 0, 0], [0, y, 0, 0], [0, 0, z, 0], [0, 0, 0, 1]]
-        self.matrix = self.matrix * matrix(identity)
-
-    def RotationX(self, r):
-        array = [
-            [1, 0, 0, 0],
-            [0, round(math.cos(r), 7), round(-math.sin(r), 7), 0],
-            [0, round(math.sin(r), 7), round(math.cos(r), 7), 0],
-            [0, 0, 0, 1],
-        ]
-        self.matrix = self.matrix * matrix(array)
-
-    def RotationY(self, r):
-        array = [
-            [round(math.cos(r), 7), 0, round(math.sin(r), 7), 0],
-            [0, 1, 0, 0],
-            [round(-math.sin(r), 7), 0, round(math.cos(r), 7), 0],
-            [0, 0, 0, 1],
-        ]
-        self.matrix = self.matrix * matrix(array)
-
-    def RotationZ(self, r):
-        array = [
-            [math.cos(r), -math.sin(r), 0, 0],
-            [math.sin(r), math.cos(r), 0, 0],
-            [0, 0, 1, 0],
-            [0, 0, 0, 1],
-        ]
-        self.matrix = self.matrix * matrix(array)
-
-    def RotationZ(self, r):
-        array = [
-            [math.cos(r), -math.sin(r), 0, 0],
-            [math.sin(r), math.cos(r), 0, 0],
-            [0, 0, 1, 0],
-            [0, 0, 0, 1],
-        ]
-        self.matrix = self.matrix * matrix(array)
-
-    def Shearing(self, xy, xz, yx, yz, zx, zy):
-        array = [[1, xy, xz, 0], [yx, 1, yz, 0], [zx, zy, 1, 0], [0, 0, 0, 1]]
-        self.matrix = self.matrix * matrix(array)
-
     def reflect(self, other):
         return self - other * 2 * self.dot(other)
 
@@ -178,3 +130,64 @@ class Vector(Tuple):
             self.z * other.x - self.x * other.z,
             self.x * other.y - self.y * other.x
         )
+
+
+class Color():
+    def __init__(self, red, green, blue):
+        self.red = red
+        self.green = green
+        self.blue = blue
+
+    def __add__(self, other):
+        red = self.red + other.red
+        green = self.green + other.green
+        blue = self.blue + other.blue
+
+        return Color(red, green, blue)
+
+    def __sub__(self, other):
+        red = self.red - other.red
+        green = self.green - other.green
+        blue = self.blue - other.blue
+
+        return Color(red, green, blue)
+
+    def __eq__(self, other):
+        if (self.red == other.red and
+            self.green == other.green and
+                self.blue == other.blue):
+            return True
+        return False
+
+    def __mul__(self, scalar):
+        red = self.red * scalar
+        green = self.green * scalar
+        blue = self.blue * scalar
+        return Color(red, green, blue)
+
+    def show(self):
+        return (self.red, self.green, self.blue)
+
+    def hadamard(self, other):
+        red = self.red * other.red
+        green = self.green * other.green
+        blue = self.blue * other.blue
+
+        return Color(red, green, blue)
+
+    def to_rgb(self):
+        r = str(clamp(math.ceil(self.red * 255), 0, 255))
+        g = str(clamp(math.ceil(self.green * 255), 0, 255))
+        b = str(clamp(math.ceil(self.blue * 255), 0, 255))
+
+        return ' '.join([r, g, b])
+
+    def __round__(self, idx=4):
+        return Color(round(self.red, idx), round(self.green, idx), round(self.blue, idx))
+
+    def __str__(self):
+        return str((self.red, self.green, self.blue))
+
+
+def clamp(n: float, minn: int, maxn: int) -> int:
+    return int(max(min(maxn, n), minn))

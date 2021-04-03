@@ -1,8 +1,7 @@
-from chapter1 import *
-from Matrice import *
-from transformations import *
+from raytracer.components.tuples import *
+from raytracer.components.matrix import *
+from raytracer.components.lighting import *
 import math
-from Lighting import *
 
 
 class Ray():
@@ -25,13 +24,13 @@ class Ray():
             return False
         t1 = (-b - math.sqrt(discriminant)) / (2*a)
         t2 = (-b + math.sqrt(discriminant)) / (2*a)
-        return intersections(intersection(t1, obj), intersection(t2, obj))
+        return Intersections(Intersection(t1, obj), Intersection(t2, obj))
 
     def transform(self, matrix):
         return Ray(matrix * self.origin, matrix * self.direction)
 
 
-class intersections():
+class Intersections():
     def __init__(self, *args):
         self.intersections = [i for i in args]
         self.intersections.sort()
@@ -49,7 +48,7 @@ class intersections():
                     return i
 
 
-class intersection():
+class Intersection():
     def __init__(self, t, obj):
         self.t = t
         self.obj = obj
@@ -70,11 +69,11 @@ class Sphere():
     def __init__(self):
         self.center = Point(0, 0, 0)
         self.radius = 1
-        self.transform = matrix([[1, 0, 0, 0],
+        self.transform = Matrix([[1, 0, 0, 0],
                                  [0, 1, 0, 0],
                                  [0, 0, 1, 0],
                                  [0, 0, 0, 1]])
-        self.material = material()
+        self.material = Material()
 
     def set_transform(self, transform):
         self.transform = transform*self.transform

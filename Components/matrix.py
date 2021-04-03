@@ -1,12 +1,14 @@
 import math
 from math import pi
-from chapter1 import *
+from raytracer.components.tuples import *
 import copy
 
 EPSILON = 0.001
 
+#Matrix and Transformations
 
-class matrix():
+
+class Matrix():
     def __init__(self, array):
         self.matrix = list(list(x) for x in array)
         self.width = len(array[0])
@@ -54,7 +56,7 @@ class matrix():
                              self[i][3] * other[3][j])
                     c[i][j] = point
 
-            return matrix(c)
+            return Matrix(c)
 
     def transpose(self):
         temp = [[0 for i in range(self.width)]
@@ -64,7 +66,7 @@ class matrix():
             for j in range(self.width):
                 temp[j][i] = self[i][j]
 
-        return matrix(temp)
+        return Matrix(temp)
 
     def determinant(self):
         if self.width == 2 and self.height == 2:
@@ -81,7 +83,7 @@ class matrix():
         array.pop(row)
         for i in array:
             i.pop(col)
-        return matrix(array)
+        return Matrix(array)
 
     def minor(self, row, col):
         return self.submatrix(row, col).determinant()
@@ -108,4 +110,66 @@ class matrix():
                 c = self.cofactor(i, j)
                 array[j][i] = round(c/det, 5)
 
-        return matrix(array)
+        return Matrix(array)
+
+
+class Translation(Matrix):  # switch to stranslation at some point
+    def __init__(self, x, y, z):
+        identity = [[1, 0, 0, x], [0, 1, 0, y], [0, 0, 1, z], [0, 0, 0, 1]]
+        super().__init__(identity)
+
+
+class Scaling(Matrix):
+    def __init__(self, x, y, z):
+        identity = [[x, 0, 0, 0], [0, y, 0, 0], [0, 0, z, 0], [0, 0, 0, 1]]
+        super().__init__(identity)
+
+
+class RotationX(Matrix):
+    def __init__(self, r):
+        array = [
+            [1, 0, 0, 0],
+            [0, round(math.cos(r), 7), round(-math.sin(r), 7), 0],
+            [0, round(math.sin(r), 7), round(math.cos(r), 7), 0],
+            [0, 0, 0, 1],
+        ]
+        super().__init__(array)
+
+
+class RotationY(Matrix):
+    def __init__(self, r):
+        array = [
+            [round(math.cos(r), 7), 0, round(math.sin(r), 7), 0],
+            [0, 1, 0, 0],
+            [round(-math.sin(r), 7), 0, round(math.cos(r), 7), 0],
+            [0, 0, 0, 1],
+        ]
+        super().__init__(array)
+
+
+class RotationZ(Matrix):
+    def __init__(self, r):
+        array = [
+            [math.cos(r), -math.sin(r), 0, 0],
+            [math.sin(r), math.cos(r), 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1],
+        ]
+        super().__init__(array)
+
+
+class RotationZ(Matrix):
+    def __init__(self, r):
+        array = [
+            [math.cos(r), -math.sin(r), 0, 0],
+            [math.sin(r), math.cos(r), 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1],
+        ]
+        super().__init__(array)
+
+
+class Shearing(Matrix):
+    def __init__(self, xy, xz, yx, yz, zx, zy):
+        super().__init__(
+            [[1, xy, xz, 0], [yx, 1, yz, 0], [zx, zy, 1, 0], [0, 0, 0, 1]])

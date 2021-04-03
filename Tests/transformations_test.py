@@ -1,10 +1,7 @@
-from transformations import *
-from chapter1 import *
-from Matrice import *
-
+from imports import *
 
 def test_transformation():
-    x = translation(5, -3, 2)
+    x = Translation(5, -3, 2)
     y = Vector(-3, 4, 5)
     z = Point(-3, 4, 5)
     print(x*z)
@@ -13,14 +10,14 @@ def test_transformation():
 
 
 def test_scaling():
-    x = scaling(2, 3, 4)
+    x = Scaling(2, 3, 4)
     y = Vector(-4, 6, 8)
     z = Point(-4, 6, 8)
     assert x*y == Vector(-8, 18, 32)
     assert x*z == Point(-8, 18, 32)
     inv = x.inverse()
     assert inv * y == Vector(-2, 2, 2)
-    tran = scaling(-1, 1, 1)
+    tran = Scaling(-1, 1, 1)
     p = Point(2, 3, 4)
     assert tran * p == Point(-2, 3, 4)
 
@@ -102,8 +99,8 @@ def test_shearing_z_to_y():
 def test_transforms_in_sequence():
     p = Point(1, 0, 1)
     a = RotationX(math.pi / 2)
-    b = scaling(5, 5, 5)
-    c = translation(10, 5, 7)
+    b = Scaling(5, 5, 5)
+    c = Translation(10, 5, 7)
     p2 = a * p
     assert p2 == Point(1, -1, 0)
     p3 = b * p2
@@ -115,7 +112,7 @@ def test_transforms_in_sequence():
 def test_transforms_chained_reverse():
     p = Point(1, 0, 1)
     a = RotationX(math.pi / 2)
-    b = scaling(5, 5, 5)
-    c = translation(10, 5, 7)
+    b = Scaling(5, 5, 5)
+    c = Translation(10, 5, 7)
     t = c * b * a
     assert t * p == Point(15, 0, 7)

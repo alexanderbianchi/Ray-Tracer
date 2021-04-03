@@ -1,4 +1,4 @@
-from chapter1 import *
+from imports import *
 
 
 def test_Point():

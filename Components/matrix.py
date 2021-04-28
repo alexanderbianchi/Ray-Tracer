@@ -3,7 +3,8 @@ from math import pi
 from raytracer.components.tuples import *
 import copy
 
-EPSILON = 0.001
+
+EPSILON = 0.00001
 
 #Matrix and Transformations
 
@@ -29,7 +30,6 @@ class Matrix():
         for i in range(self.height):
             for j in range(self.width):
                 if abs(self[i][j] - other[i][j]) > EPSILON:
-                    print(self[i][j] - other[i][j])
                     return False
         return True
 
@@ -48,7 +48,7 @@ class Matrix():
             c = [[0 for i in range(other.width)] for j in range(self.height)]
             for i in range(self.height):
 
-                for j in range(other.width):  # invert it then use the rows?
+                for j in range(other.width): 
 
                     point = (self[i][0] * other[0][j] +
                              self[i][1] * other[1][j] +
@@ -108,12 +108,12 @@ class Matrix():
         for i in range(len(self.matrix)):
             for j in range(len(self.matrix[i])):
                 c = self.cofactor(i, j)
-                array[j][i] = round(c/det, 5)
+                array[j][i] = c/det
 
         return Matrix(array)
 
 
-class Translation(Matrix):  # switch to stranslation at some point
+class Translation(Matrix):  
     def __init__(self, x, y, z):
         identity = [[1, 0, 0, x], [0, 1, 0, y], [0, 0, 1, z], [0, 0, 0, 1]]
         super().__init__(identity)

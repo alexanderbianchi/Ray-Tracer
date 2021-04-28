@@ -1,5 +1,6 @@
 from raytracer.components.tuples import *
 import math
+from raytracer.components.shapes import *
 
 
 class Canvas():
@@ -27,7 +28,9 @@ class Canvas():
 
         for i in self.canvas:
             for j in i:
+
                 numbers = j.to_rgb()
+
                 tracker += len(numbers) + 1
                 colors.append(numbers + ' ')
 

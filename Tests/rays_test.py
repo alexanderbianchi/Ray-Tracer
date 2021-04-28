@@ -1,5 +1,6 @@
 from imports import *
 
+
 def test_creation():
     o = Point(1, 2, 3)
     d = Vector(4, 5, 6)
@@ -82,21 +83,22 @@ def test_hit():
     print(i5)
     assert i5 == i4
 
+# replaced by later tests
 
-def test_translate_ray():
-    r = Ray(Point(1, 2, 3), Vector(0, 1, 0))
-    m = Translation(3, 4, 5)
-    r2 = r.transform(m)
-    assert r2.origin == Point(4, 6, 8)
-    assert r2.direction == Vector(0, 1, 0)
+# def test_translate_ray():
+#     r = Ray(Point(1, 2, 3), Vector(0, 1, 0))
+#     m = Translation(3, 4, 5)
+#     r2 = r.transform(m)
+#     assert r2.origin == Point(4, 6, 8)
+#     assert r2.direction == Vector(0, 1, 0)
 
 
-def test_scale_ray():
-    r = Ray(Point(1, 2, 3), Vector(0, 1, 0))
-    m = Scaling(2, 3, 4)
-    r2 = r.transform(m)
-    assert r2.origin == Point(2, 6, 12)
-    assert r2.direction == Vector(0, 3, 0)
+# def test_scale_ray():
+#     r = Ray(Point(1, 2, 3), Vector(0, 1, 0))
+#     m = Scaling(2, 3, 4)
+#     r2 = r.transform(m)
+#     assert r2.origin == Point(2, 6, 12)
+#     assert r2.direction == Vector(0, 3, 0)
 
 
 def test_identity():

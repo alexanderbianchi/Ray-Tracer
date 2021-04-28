@@ -1,5 +1,6 @@
 from imports import *
 
+
 def test_transformation():
     x = Translation(5, -3, 2)
     y = Vector(-3, 4, 5)
@@ -16,10 +17,14 @@ def test_scaling():
     assert x*y == Vector(-8, 18, 32)
     assert x*z == Point(-8, 18, 32)
     inv = x.inverse()
+    print(inv * y)
     assert inv * y == Vector(-2, 2, 2)
     tran = Scaling(-1, 1, 1)
     p = Point(2, 3, 4)
     assert tran * p == Point(-2, 3, 4)
+
+
+test_scaling()
 
 
 def test_x():

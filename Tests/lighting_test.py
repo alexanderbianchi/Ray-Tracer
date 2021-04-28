@@ -1,10 +1,15 @@
 from imports import *
 
+
 def test_normalX():
     s = Sphere()
     n = s.normalize_at(Point(1, 0, 0))
     print(n)
     assert n == Vector(1, 0, 0)
+
+
+test_normalX()
+
 
 def test_normalY():
     s = Sphere()

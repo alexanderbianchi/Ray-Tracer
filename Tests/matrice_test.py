@@ -1,5 +1,6 @@
 from imports import *
 
+
 def test_matrix():
     array = [[1, 2, 3, 4, 5],
              [6, 7, 8, 9, 10],
@@ -116,5 +117,5 @@ def test_inverse():
         [-0.52256, -0.81391, -0.30075, 0.30639],
     ])
     test = array.inverse()
-
+    print(test)
     assert test == answer

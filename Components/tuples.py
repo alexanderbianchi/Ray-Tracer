@@ -2,7 +2,7 @@ import math
 
 
 def compare(a, b):
-    EPSILON = 0.001
+    EPSILON = 0.002
     if abs(a-b) < EPSILON:
         return True
     else:
@@ -114,6 +114,13 @@ class Tuple():
     def reflect(self, other):
         return self - other * 2 * self.dot(other)
 
+    def cross(self, other):
+        return Vector(
+            self.y * other.z - self.z * other.y,
+            self.z * other.x - self.x * other.z,
+            self.x * other.y - self.y * other.x
+        )
+
 
 class Point(Tuple):
     def __init__(self, x, y, z):
@@ -123,13 +130,6 @@ class Point(Tuple):
 class Vector(Tuple):
     def __init__(self, x, y, z):
         super().__init__(x, y, z, 0)
-
-    def cross(self, other):
-        return Vector(
-            self.y * other.z - self.z * other.y,
-            self.z * other.x - self.x * other.z,
-            self.x * other.y - self.y * other.x
-        )
 
 
 class Color():
@@ -153,11 +153,14 @@ class Color():
         return Color(red, green, blue)
 
     def __eq__(self, other):
-        if (self.red == other.red and
-            self.green == other.green and
-                self.blue == other.blue):
+        if (not compare(self.red, other.red) or
+                not compare(self.blue, other.blue) or
+                not compare(self.green, other.green)
+                ):
+            return False
+
+        else:
             return True
-        return False
 
     def __mul__(self, scalar):
         red = self.red * scalar

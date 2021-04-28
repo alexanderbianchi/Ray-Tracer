@@ -8,3 +8,4 @@ Patterns include checkerboard, rings, stripes, and gradients. Shapes include sph
 
 Building this project was a fantastic way to get to know the crossroads between math and computer science and has certainly sparked an interest in linear algebra for me.
 
+![alt text](https://github.com/alexanderbianchi/Python-Projects/blob/main/refractiveCircle.jpg)

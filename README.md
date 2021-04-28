@@ -6,5 +6,5 @@ Unit tests are done in PyTest and the project was built with an object oriented 
 
 Patterns include checkerboard, rings, stripes, and gradients. Shapes include spheres and planes.
 
-Getting to build this project was a fantastic way to get to know the crossroads between math and computer science and has certainly sparked an interest in linear algebra for me.
+Building this project was a fantastic way to get to know the crossroads between math and computer science and has certainly sparked an interest in linear algebra for me.
 
